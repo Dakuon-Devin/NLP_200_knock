@@ -2,297 +2,281 @@
 
 ## 問題00: 文字列の逆順
 ### 問題の概要
-この問題では、文字列"stressed"を逆順にして"desserts"という文字列を得る処理を実装します。
+この問題では、文字列「stressed」を逆順にして「desserts」という文字列を得る処理を実装します。
 
 ### 解法のポイント
-1. **Pythonでの文字列の逆順**：
-   Pythonでは、スライス記法 `[::-1]` を使うと、文字列を逆順に取得できます。
-   ```python
-   s = "stressed"
-   reversed_s = s[::-1]  # "desserts"
-   ```
+Pythonでは、文字列のスライス操作を使用して簡単に文字列を逆順にすることができます。
+```python
+s = "stressed"
+reversed_s = s[::-1]  # スライス操作で逆順にする
+print(reversed_s)  # "desserts"が出力される
+```
 
-2. **他の方法**：
-   - `reversed関数とjoinメソッドを使用`：
-     ```python
-     s = "stressed"
-     reversed_s = ''.join(reversed(s))  # "desserts"
-     ```
-   - `リストに変換して逆順にしてから結合`：
-     ```python
-     s = "stressed"
-     char_list = list(s)
-     char_list.reverse()
-     reversed_s = ''.join(char_list)  # "desserts"
-     ```
+スライス操作の`[::-1]`は、文字列の最初から最後までを-1ステップで（つまり逆順に）取得することを意味します。
 
 ### 実装上の注意点
-- 文字列は不変（イミュータブル）なので、元の文字列を直接変更することはできません。新しい文字列を作成する必要があります。
-- スライス記法 `[::-1]` が最も簡潔で効率的な方法です。
+- Pythonの文字列は不変（immutable）なので、新しい文字列が生成されます。
+- 他の方法としては、`reversed()`関数を使用して文字列を逆順にし、`join()`メソッドで結合する方法もあります：
+  ```python
+  s = "stressed"
+  reversed_s = ''.join(reversed(s))
+  print(reversed_s)  # "desserts"が出力される
+  ```
 
 ## 問題01: 「パタトクカシーー」
 ### 問題の概要
-この問題では、「パタトクカシーー」という文字列の奇数番目の文字を取り出して、「パトカー」という文字列を作る処理を実装します。
+この問題では、「パタトクカシーー」という文字列の奇数番目の文字を取り出して、「パトカー」という文字列を得る処理を実装します。
 
 ### 解法のポイント
-1. **文字列のインデックス**：
-   Pythonでは、文字列の各文字にインデックスでアクセスできます。インデックスは0から始まるため、奇数番目の文字（1, 3, 5, ...）は、インデックスでは0, 2, 4, ...となります。
+Pythonでは、文字列のスライス操作を使用して、特定の間隔で文字を取り出すことができます。
+```python
+s = "パタトクカシーー"
+result = s[::2]  # 偶数インデックス（0から始まるため、奇数番目の文字）を取り出す
+print(result)  # "パトカー"が出力される
+```
 
-2. **スライスを使った方法**：
-   Pythonのスライス記法 `[start:stop:step]` を使うと、特定の間隔で文字を取り出すことができます。
-   ```python
-   s = "パタトクカシーー"
-   result = s[::2]  # "パトカー"
-   ```
-
-3. **リスト内包表記を使った方法**：
-   ```python
-   s = "パタトクカシーー"
-   result = ''.join([s[i] for i in range(0, len(s), 2)])  # "パトカー"
-   ```
+スライス操作の`[::2]`は、文字列の最初から最後までを2ステップごとに取得することを意味します。
 
 ### 実装上の注意点
-- 日本語の文字列も、Pythonでは1文字ずつ正しく処理されます。
-- インデックスの開始が0であることに注意が必要です。
+- Pythonのインデックスは0から始まるため、奇数番目の文字は偶数インデックスになります。
+- 日本語の文字（全角文字）も1文字としてカウントされます。
 
 ## 問題02: 「パトカー」＋「タクシー」＝「パタトクカシーー」
 ### 問題の概要
-この問題では、「パトカー」と「タクシー」という2つの文字列を交互に結合して、「パタトクカシーー」という文字列を作る処理を実装します。
+この問題では、「パトカー」と「タクシー」という2つの文字列を交互に結合して、「パタトクカシーー」という文字列を得る処理を実装します。
 
 ### 解法のポイント
-1. **zipを使った方法**：
-   Pythonの `zip()` 関数を使うと、複数のイテラブルオブジェクトから要素を1つずつ取り出してタプルにまとめることができます。
-   ```python
-   s1 = "パトカー"
-   s2 = "タクシー"
-   result = ''.join(c1 + c2 for c1, c2 in zip(s1, s2))  # "パタトクカシーー"
-   ```
+Pythonでは、`zip()`関数を使用して2つの文字列を要素ごとに組み合わせることができます。
+```python
+s1 = "パトカー"
+s2 = "タクシー"
+result = ''.join(c1 + c2 for c1, c2 in zip(s1, s2))
+print(result)  # "パタトクカシーー"が出力される
+```
 
-2. **インデックスを使った方法**：
-   ```python
-   s1 = "パトカー"
-   s2 = "タクシー"
-   result = ''
-   for i in range(min(len(s1), len(s2))):
-       result += s1[i] + s2[i]
-   # 長さが異なる場合は残りの文字を追加
-   if len(s1) > len(s2):
-       result += s1[len(s2):]
-   elif len(s2) > len(s1):
-       result += s2[len(s1):]
-   ```
+`zip(s1, s2)`は、2つの文字列の対応する文字のペアを生成します。その後、各ペアを結合して1つの文字列にします。
 
 ### 実装上の注意点
-- 2つの文字列の長さが異なる場合の処理を考慮する必要があります。
+- `zip()`関数は、短い方の文字列の長さに合わせてペアを生成します。この問題では、両方の文字列の長さが同じなので問題ありません。
+- 文字列の長さが異なる場合は、`itertools.zip_longest()`を使用して、不足している部分を指定した値（例えば空文字）で埋めることができます。
 
 ## 問題03: 円周率
 ### 問題の概要
-この問題では、"Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."という文を単語に分解し、各単語の（アルファベットの）文字数を先頭から順に並べたリストを作成します。
+この問題では、「Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.」という文を単語に分解し、各単語の文字数を順に並べると、円周率の最初の15桁になることを確認します。
 
 ### 解法のポイント
-1. **文の分割**：
-   文を空白で分割して単語のリストを作成します。
-   ```python
-   text = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
-   words = text.split()
-   ```
-
-2. **文字数のカウント**：
-   各単語の文字数をカウントします。ただし、カンマやピリオドなどの記号は除外します。
-   ```python
-   import re
-   word_lengths = [len(re.sub(r'[^a-zA-Z]', '', word)) for word in words]
-   ```
+Pythonでは、文字列の`split()`メソッドを使用して文を単語に分割し、各単語の長さを取得することができます。
+```python
+text = "Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics."
+# カンマとピリオドを除去してから単語に分割
+words = text.replace(',', '').replace('.', '').split()
+# 各単語の文字数を取得
+word_lengths = [len(word) for word in words]
+print(word_lengths)  # [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9]が出力される
+```
 
 ### 実装上の注意点
-- 単語の区切りとして空白を使用しますが、カンマやピリオドなどの記号も単語の一部として扱われる可能性があります。
-- 記号を除外するために、正規表現を使用することができます。
+- カンマやピリオドなどの句読点を除去するか、それらを含めるかによって結果が変わります。この問題では、句読点を除去してから単語の長さを数えています。
+- 実際の円周率の最初の15桁は「3.14159265358979」ですが、小数点を除くと「314159265358979」となります。単語の長さのリストを見ると、「3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9」となり、円周率の桁と一致していることがわかります。
 
 ## 問題04: 元素記号
 ### 問題の概要
-この問題では、"Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."という文を単語に分解し、1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字、それ以外の単語は先頭の2文字を取り出し、取り出した文字列から単語の位置への連想配列（辞書型もしくはマップ型）を作成します。
+この問題では、「Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.」という文を単語に分解し、1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字、それ以外の単語は先頭の2文字を取り出し、それを単語の位置（先頭から何番目の単語か）に対応する辞書を作成します。
 
 ### 解法のポイント
-1. **文の分割**：
-   文を空白で分割して単語のリストを作成します。
-
-2. **指定された位置の単語の処理**：
-   1, 5, 6, 7, 8, 9, 15, 16, 19番目の単語は先頭の1文字、それ以外の単語は先頭の2文字を取り出します。
-   ```python
-   text = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
-   words = text.split()
-   one_char_positions = [1, 5, 6, 7, 8, 9, 15, 16, 19]  # 1-indexed
-   
-   element_dict = {}
-   for i, word in enumerate(words, 1):  # 1-indexedにするためにenumerate(words, 1)を使用
-       if i in one_char_positions:
-           element_dict[word[:1]] = i
-       else:
-           element_dict[word[:2]] = i
-   ```
+Pythonでは、辞書（dictionary）を使用して、単語の位置と元素記号を対応付けることができます。
+```python
+text = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
+# カンマとピリオドを除去してから単語に分割
+words = text.replace(',', '').replace('.', '').split()
+# 1文字を取り出す単語の位置（0から始まるインデックスに変換）
+one_char_positions = [0, 4, 5, 6, 7, 8, 14, 15, 18]
+# 単語の位置と元素記号を対応付ける辞書を作成
+element_symbols = {}
+for i, word in enumerate(words):
+    if i in one_char_positions:
+        element_symbols[i+1] = word[0]  # 1文字目を取得
+    else:
+        element_symbols[i+1] = word[:2]  # 1-2文字目を取得
+print(element_symbols)
+```
 
 ### 実装上の注意点
-- 問題文では1-indexedで位置が指定されていますが、Pythonのインデックスは0から始まるため、調整が必要です。
-- 単語の先頭の文字を取り出す際に、記号を除外するかどうかを考慮する必要があります。
+- Pythonのインデックスは0から始まるため、問題文の「1, 5, 6, 7, 8, 9, 15, 16, 19番目」は、0から始まるインデックスでは「0, 4, 5, 6, 7, 8, 14, 15, 18」になります。
+- 辞書のキーとして単語の位置（1から始まる）を使用し、値として元素記号を格納しています。
 
 ## 問題05: n-gram
 ### 問題の概要
-この問題では、与えられたシーケンス（文字列やリストなど）からn-gramを作る関数を実装します。n-gramとは、対象となるシーケンスをn個の要素ごとに分割したものです。この関数を用いて、"I am an NLPer"という文から単語bi-gram、文字bi-gramを得ます。
+この問題では、与えられた文字列から文字n-gramと単語n-gramを生成する関数を実装します。
 
 ### 解法のポイント
-1. **n-gram関数の実装**：
-   シーケンスとnを受け取り、n-gramのリストを返す関数を実装します。
-   ```python
-   def n_gram(sequence, n):
-       return [sequence[i:i+n] for i in range(len(sequence)-n+1)]
-   ```
+n-gramとは、連続するn個の要素（文字や単語）のシーケンスのことです。Pythonでは、スライス操作を使用して簡単にn-gramを生成することができます。
 
-2. **単語bi-gramの作成**：
-   文を単語に分割し、n=2でn-gram関数を適用します。
-   ```python
-   text = "I am an NLPer"
-   words = text.split()
-   word_bigrams = n_gram(words, 2)  # [['I', 'am'], ['am', 'an'], ['an', 'NLPer']]
-   ```
+```python
+def character_ngram(text, n):
+    """文字n-gramを生成する関数"""
+    # 空白や句読点を除去
+    text = text.replace(' ', '').replace(',', '').replace('.', '')
+    return [text[i:i+n] for i in range(len(text) - n + 1)]
 
-3. **文字bi-gramの作成**：
-   文をそのままn=2でn-gram関数に渡します。
-   ```python
-   char_bigrams = n_gram(text, 2)  # ['I ', ' a', 'am', 'm ', ' a', 'an', 'n ', ' N', 'NL', 'LP', 'Pe', 'er']
-   ```
+def word_ngram(text, n):
+    """単語n-gramを生成する関数"""
+    # 単語に分割
+    words = text.replace(',', '').replace('.', '').split()
+    return [tuple(words[i:i+n]) for i in range(len(words) - n + 1)]
+
+# 例
+text = "I am an NLPer"
+print(character_ngram(text, 2))  # 文字バイグラム
+print(word_ngram(text, 2))  # 単語バイグラム
+```
 
 ### 実装上の注意点
-- 単語n-gramを作成する場合は、文を単語に分割してからn-gram関数を適用します。
-- 文字n-gramを作成する場合は、文をそのままn-gram関数に渡します。
-- n-gram関数は、シーケンスの長さがn未満の場合は空のリストを返します。
+- 文字n-gramでは、空白や句読点を含めるか除去するかによって結果が変わります。この実装では、空白や句読点を除去しています。
+- 単語n-gramでは、単語のリストからn個ずつの部分リストを生成します。タプル（tuple）を使用することで、不変のシーケンスとして扱うことができます。
 
 ## 問題06: 集合
 ### 問題の概要
-この問題では、"paraparaparadise"と"paragraph"から文字bi-gramの集合を作り、それぞれをX、Yとして、X∪Y（和集合）、X∩Y（積集合）、X−Y（差集合）を求めます。さらに、"se"という文字bi-gramがXおよびYに含まれるかどうかを調べます。
+この問題では、「paraparaparadise」と「paragraph」から文字バイグラムを生成し、それらの和集合、積集合、差集合を求めます。また、「se」というバイグラムがそれぞれの集合に含まれるかどうかを調べます。
 
 ### 解法のポイント
-1. **文字bi-gramの作成**：
-   問題05で実装したn-gram関数を使用して、2つの文字列から文字bi-gramを作成します。
-   ```python
-   text1 = "paraparaparadise"
-   text2 = "paragraph"
-   X = set(n_gram(text1, 2))
-   Y = set(n_gram(text2, 2))
-   ```
+Pythonでは、集合（set）を使用して、和集合、積集合、差集合を簡単に計算することができます。
 
-2. **集合演算**：
-   Pythonの集合演算を使用して、和集合、積集合、差集合を求めます。
-   ```python
-   union_set = X | Y  # 和集合
-   intersection_set = X & Y  # 積集合
-   difference_set = X - Y  # 差集合
-   ```
+```python
+def character_bigram(text):
+    """文字バイグラムを生成する関数"""
+    return [text[i:i+2] for i in range(len(text) - 1)]
 
-3. **含まれるかどうかの判定**：
-   `in`演算子を使用して、特定の要素が集合に含まれるかどうかを判定します。
-   ```python
-   is_se_in_X = "se" in X
-   is_se_in_Y = "se" in Y
-   ```
+# 文字バイグラムを生成
+X = set(character_bigram("paraparaparadise"))
+Y = set(character_bigram("paragraph"))
+
+# 和集合
+union_set = X | Y  # または X.union(Y)
+
+# 積集合
+intersection_set = X & Y  # または X.intersection(Y)
+
+# 差集合
+difference_set = X - Y  # または X.difference(Y)
+
+# 「se」の有無
+se_in_X = "se" in X
+se_in_Y = "se" in Y
+
+print(f"和集合: {union_set}")
+print(f"積集合: {intersection_set}")
+print(f"差集合: {difference_set}")
+print(f"'se' in X: {se_in_X}")
+print(f"'se' in Y: {se_in_Y}")
+```
 
 ### 実装上の注意点
-- 集合を使用することで、重複する要素を自動的に除外できます。
-- 集合演算は、Pythonの組み込み演算子（`|`, `&`, `-`）または集合のメソッド（`union()`, `intersection()`, `difference()`）を使用できます。
+- 集合は重複する要素を持たないため、バイグラムの頻度情報は失われます。頻度情報も保持したい場合は、`collections.Counter`を使用することができます。
+- 集合演算子（`|`, `&`, `-`）を使用すると、より直感的に集合演算を表現できます。
 
 ## 問題07: テンプレートによる文生成
 ### 問題の概要
-この問題では、引数x、y、zを受け取り、「x時のyはz」という文字列を返す関数を実装します。さらに、この関数に「12」「気温」「22.4」を渡して、「12時の気温は22.4」という文字列を得ます。
+この問題では、「x時のyはz」という文を生成する関数を実装します。この関数は、x, y, zを引数として受け取り、それらを組み合わせた文を返します。
 
 ### 解法のポイント
-1. **テンプレート文字列の作成**：
-   引数を受け取り、テンプレートに埋め込んで文字列を返す関数を実装します。
-   ```python
-   def template(x, y, z):
-       return f"{x}時の{y}は{z}"
-   ```
+Pythonでは、文字列のフォーマット機能を使用して、テンプレート文を生成することができます。
 
-2. **関数の呼び出し**：
-   実装した関数に引数を渡して、結果を確認します。
-   ```python
-   result = template("12", "気温", "22.4")  # "12時の気温は22.4"
-   ```
+```python
+def generate_sentence(x, y, z):
+    """「x時のyはz」という文を生成する関数"""
+    return f"{x}時の{y}は{z}"
+
+# 例
+result = generate_sentence(12, "気温", "22.4")
+print(result)  # "12時の気温は22.4"が出力される
+```
 
 ### 実装上の注意点
-- Pythonでは、f文字列（Python 3.6以降）を使用すると、変数を文字列に埋め込むことができます。
-- 古いバージョンのPythonでは、`format()`メソッドや`%`演算子を使用することもできます。
+- f文字列（Python 3.6以降）を使用すると、変数を直接文字列内に埋め込むことができ、コードが読みやすくなります。
+- 古いバージョンのPythonでは、`format()`メソッドや`%`演算子を使用することもできます：
   ```python
   # format()メソッドを使用
-  def template(x, y, z):
-      return "{}時の{}は{}".format(x, y, z)
+  return "{}時の{}は{}".format(x, y, z)
   
   # %演算子を使用
-  def template(x, y, z):
-      return "%s時の%sは%s" % (x, y, z)
+  return "%s時の%sは%s" % (x, y, z)
   ```
 
 ## 問題08: 暗号文
 ### 問題の概要
-この問題では、与えられた文字列に対して、各文字を以下の規則で変換する関数を実装します：
-- 英小文字ならば、(219 - 文字コード)の文字に置換
-- その他の文字はそのまま
-
-この関数を用いて、「Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.」を暗号化し、復号します。
+この問題では、与えられた文字列に対して、各文字を暗号化する関数と、暗号化された文字列を復号する関数を実装します。暗号化のルールは、英小文字ならば(219 - 文字コード)の文字に置換し、それ以外の文字はそのまま出力するというものです。
 
 ### 解法のポイント
-1. **暗号化関数の実装**：
-   文字列を受け取り、各文字を規則に従って変換する関数を実装します。
-   ```python
-   def cipher(text):
-       result = ""
-       for char in text:
-           if char.islower():  # 英小文字かどうかを判定
-               result += chr(219 - ord(char))  # 文字コードを変換
-           else:
-               result += char  # その他の文字はそのまま
-       return result
-   ```
+Pythonでは、文字のASCII値を取得するには`ord()`関数を、ASCII値から文字を取得するには`chr()`関数を使用します。
 
-2. **暗号化と復号**：
-   実装した関数を使用して、文字列を暗号化し、さらに暗号化された文字列を復号します。
-   ```python
-   text = "Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can."
-   encrypted = cipher(text)
-   decrypted = cipher(encrypted)  # 同じ関数を適用することで復号できる
-   ```
+```python
+def cipher(text):
+    """文字列を暗号化する関数"""
+    result = ""
+    for char in text:
+        if char.islower():  # 英小文字かどうかを判定
+            # 219 - 文字コードの文字に置換
+            result += chr(219 - ord(char))
+        else:
+            # それ以外の文字はそのまま
+            result += char
+    return result
+
+def decipher(encrypted_text):
+    """暗号化された文字列を復号する関数"""
+    # 暗号化と同じ処理を適用すると復号できる
+    return cipher(encrypted_text)
+
+# 例
+original_text = "Hello, World!"
+encrypted_text = cipher(original_text)
+decrypted_text = decipher(encrypted_text)
+
+print(f"元の文字列: {original_text}")
+print(f"暗号化された文字列: {encrypted_text}")
+print(f"復号された文字列: {decrypted_text}")
+```
 
 ### 実装上の注意点
-- 文字の判定には、`islower()`メソッドを使用します。
-- 文字コードの変換には、`ord()`関数（文字から文字コードを取得）と`chr()`関数（文字コードから文字を取得）を使用します。
-- この暗号化方法は、英小文字に対して対称的な変換を行うため、同じ関数を2回適用することで元の文字列に戻ります。
+- 英小文字のASCII値は97（'a'）から122（'z'）までです。例えば、'a'の場合、219 - 97 = 122となり、これは'z'のASCII値です。つまり、'a'は'z'に、'b'は'y'に、...、'z'は'a'に置換されます。
+- この暗号化方式は対称的なので、同じ関数を使って暗号化と復号を行うことができます。
 
 ## 問題09: Typoglycemia
 ### 問題の概要
-この問題では、スペースで区切られた単語列に対して、各単語の先頭と末尾の文字は残し、それ以外の文字の順序をランダムに並び替える関数を実装します。
+この問題では、スペースで区切られた単語列に対して、各単語の先頭と末尾の文字は残し、それ以外の文字の順序をランダムに並び替える関数を実装します。ただし、長さが4以下の単語は並び替えません。
 
 ### 解法のポイント
-1. **単語の分割**：
-   文を空白で分割して単語のリストを作成します。
+Pythonでは、`random`モジュールの`shuffle()`関数を使用して、リストの要素をランダムに並び替えることができます。
 
-2. **単語の処理**：
-   各単語に対して、先頭と末尾の文字を残し、それ以外の文字の順序をランダムに並び替えます。
-   ```python
-   import random
+```python
+import random
 
-   def typoglycemia(text):
-       words = text.split()
-       result = []
-       for word in words:
-           if len(word) <= 4:  # 4文字以下の単語はそのまま
-               result.append(word)
-           else:
-               # 先頭と末尾の文字を除いた部分をランダムに並び替え
-               middle_chars = list(word[1:-1])
-               random.shuffle(middle_chars)
-               result.append(word[0] + ''.join(middle_chars) + word[-1])
-       return ' '.join(result)
-   ```
+def typoglycemia(text):
+    """Typoglycemiaを適用する関数"""
+    words = text.split()
+    result = []
+    
+    for word in words:
+        if len(word) <= 4:
+            # 長さが4以下の単語はそのまま
+            result.append(word)
+        else:
+            # 先頭と末尾の文字を除いた部分をランダムに並び替え
+            middle_chars = list(word[1:-1])
+            random.shuffle(middle_chars)
+            shuffled_word = word[0] + ''.join(middle_chars) + word[-1]
+            result.append(shuffled_word)
+    
+    return ' '.join(result)
+
+# 例
+text = "I couldn't believe that I could actually understand what I was reading : the phenomenal power of the human mind ."
+result = typoglycemia(text)
+print(result)
+```
 
 ### 実装上の注意点
-- 単語の長さが4文字以下の場合は、そのままにすることが一般的です。
-- ランダムな並び替えには、`random.shuffle()`関数を使用します。
-- 先頭と末尾の文字を除いた部分をリストに変換してからシャッフルし、再度結合します。
+- `random.shuffle()`関数は、リストを直接変更します（in-place操作）。そのため、文字列を一度リストに変換してから操作する必要があります。
+- 単語の長さが1や2の場合、先頭と末尾の文字だけで単語全体を構成することになるため、並び替えは行われません。
+- 実行するたびに異なる結果が得られますが、先頭と末尾の文字は常に同じ位置に保たれます。
